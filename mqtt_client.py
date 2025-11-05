@@ -7,8 +7,8 @@ latest_points = []
 # Flag to prevent multiple background loops
 _background_started = False 
 
-BROKER = "test.mosquitto.org"
-TOPIC = "geo/live"
+BROKER = "broker.emqx.io"
+TOPIC = "Tutor21Group07/facility"
 PORT = 1883
 
 client_id = f'dash-subscriber-{random.randint(0, 1000)}'
