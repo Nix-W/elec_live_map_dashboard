@@ -4,7 +4,7 @@ Utility functions for data processing and transformations.
 import math
 from datetime import datetime
 from dash import html
-from config import COLORS, BASE_MARKER_RADIUS, MAX_MARKER_RADIUS
+from config import FUEL_TYPE_COLORS, BASE_MARKER_RADIUS, MAX_MARKER_RADIUS
 
 
 def _parse_timestamp(ts_value):
@@ -25,15 +25,16 @@ def _to_float(value):
         return None
 
 
-def _color_from_change(change):
-    """Return marker color based on change value."""
-    if change is None:
-        return COLORS['unknown']
-    elif change > 0:
-        return COLORS['increase']
-    elif change < 0:
-        return COLORS['decrease']
-    return COLORS['no_change']
+def _color_from_fuel_type(fuel_tech):
+    """Return marker color based on fuel technology type."""
+    if not fuel_tech:
+        return FUEL_TYPE_COLORS['default']
+    
+    # Clean and normalize fuel tech string
+    fuel_tech_clean = str(fuel_tech).lower().replace(' ', '_').replace('-', '_')
+    
+    # Return matching color or default
+    return FUEL_TYPE_COLORS.get(fuel_tech_clean, FUEL_TYPE_COLORS['default'])
 
 
 def _radius_from_demand(demand_value, demand_min, demand_max):
