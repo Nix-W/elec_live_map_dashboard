@@ -1,7 +1,4 @@
-# Election Live Map Dashboard
-
-## Overview
-This project appears to be an election live map dashboard application.
+# Real-Time Electricity Geo Dashboard
 
 ## Installation
 
@@ -9,17 +6,27 @@ This project appears to be an election live map dashboard application.
 pip install -r requirements.txt
 ```
 
-## Usage
+## Data Subscription and Visualisation
+
+Map Visualisation
 
 ```bash
-# Publish test
-python3 test_mqtt.py
-
 # Subscribe
 python3 app.py
 ```
 
+Test for Data Publish
+
+```bash
+# Publish test
+python3 test_mqtt.py
+```
+
 ## Features
-- Live election data visualization
+- Live electricity data visualization
 - Interactive map interface
 - Real-time updates
+
+## Screenshot
+
+![Real-Time Electricity Geo Dashboard](images/electricity_geo_dashboard.png)

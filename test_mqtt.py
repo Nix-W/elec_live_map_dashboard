@@ -6,8 +6,8 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 
 # MQTT Configuration
-BROKER = "test.mosquitto.org"
-TOPIC = "geo/live"
+BROKER = "broker.emqx.io"
+TOPIC = "Tutor21Group07/facility"
 PORT = 1883
 
 def publish_csv_data(csv_file):
