@@ -30,13 +30,21 @@ MAP_ATTRIBUTION = '&copy; <a href="https://carto.com/attributions">CARTO</a>'
 BASE_MARKER_RADIUS = 7.0
 MAX_MARKER_RADIUS = 10.0
 
-# Color scheme
-COLORS = {
-    'increase': "#5dffa0",    # green for increase
-    'decrease': "#f68c80",    # red for decrease  
-    'unknown': "#f6df83",     # yellow for unknown
-    'no_change': "#a2b3c2",   # grey for no change
-    'selected_outline': "#0d47a1"
+# Fuel type color scheme for markers
+FUEL_TYPE_COLORS = {
+    'black_coal': "#2c3e50",        # dark grey/black for coal
+    'brown_coal': "#8b4513",        # brown for brown coal
+    'gas_ccgt': "#3498db",          # blue for gas combined cycle
+    'gas_ocgt': "#5dade2",          # light blue for gas open cycle
+    'gas_steam': "#85c1e9",         # pale blue for gas steam
+    'hydro': "#1abc9c",             # teal for hydro
+    'wind': "#27ae60",              # green for wind
+    'solar': "#f39c12",             # orange for solar
+    'battery': "#9b59b6",           # purple for battery
+    'biomass': "#16a085",           # dark teal for biomass
+    'landfill_gas': "#a569bd",      # light purple for landfill gas
+    'waste_coal_mine': "#34495e",   # dark grey for waste coal
+    'default': "#95a5a6"            # light grey for unknown fuel types
 }
 
 # Update interval (milliseconds)

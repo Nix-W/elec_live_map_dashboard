@@ -11,7 +11,7 @@ from dash.dependencies import Input, Output, State, ALL
 import dash_leaflet as dl
 import mqtt_client
 from utils import (
-    _parse_timestamp, _to_float, _color_from_change, _radius_from_demand,
+    _parse_timestamp, _to_float, _color_from_fuel_type, _radius_from_demand,
     _build_popup_content, format_power_display, format_demand_display,
     format_emissions_display, format_price_display, format_timestamp_display,
     get_change_color, get_change_symbol, get_emission_change_color,
@@ -20,7 +20,7 @@ from utils import (
     filter_summary_data_by_region, filter_summary_data_by_fuel,
     create_filter_status_message
 )
-from config import COLORS
+from config import FUEL_TYPE_COLORS
 
 
 def register_callbacks(app):
@@ -157,11 +157,6 @@ def register_callbacks(app):
                     if facility_has_emissions and previous_has_emissions:
                         facility_emission_change = facility_total_emissions - previous_facility_emissions
 
-            # Use facility power change for marker color
-            power_change = facility_power_change
-
-            marker_color = _color_from_change(power_change)
-
             lat = _to_float(latest_point.get("lat"))
             lng = _to_float(latest_point.get("lng"))
             if lat is None or lng is None:
@@ -170,6 +165,10 @@ def register_callbacks(app):
             facility_name = latest_point.get("facility_name") or facility_id
             network_region = latest_point.get("network_region") or ""
             fuel_tech = latest_point.get("fuel_tech") or ""
+
+            # Use fuel type for marker color instead of power change
+            marker_color = _color_from_fuel_type(fuel_tech)
+            power_change = facility_power_change
 
             demand_value = _to_float(
                 latest_point.get("demand")
@@ -311,7 +310,7 @@ def register_callbacks(app):
             if lat is None or lng is None:
                 continue
 
-            marker_color = info.get("marker_color") or COLORS['no_change']
+            marker_color = info.get("marker_color") or FUEL_TYPE_COLORS['default']
             demand_value = info.get("demand_value")
             marker_radius = _radius_from_demand(
                 demand_value,
@@ -332,7 +331,6 @@ def register_callbacks(app):
             )
 
             is_selected = selected_facility == facility_id
-            outline_color = COLORS['selected_outline'] if is_selected else marker_color
             adjusted_radius = marker_radius + (1.5 if is_selected else 0.0)
 
             markers.append(
@@ -340,7 +338,7 @@ def register_callbacks(app):
                     id={"type": "facility-marker", "facility_id": facility_id},
                     center=[lat, lng],
                     radius=adjusted_radius,
-                    color=outline_color,
+                    color=marker_color,
                     fillColor=marker_color,
                     fillOpacity=0.85 if is_selected else 0.6,
                     weight=4 if is_selected else 2,
